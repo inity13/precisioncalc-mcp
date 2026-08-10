@@ -137,6 +137,13 @@ export default {
     const path = url.pathname;
     if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: CORS });
 
+    // Google Search Console site verification. Served directly (HTTP 200, no
+    // extension-stripping redirect) so Google's file check passes at the exact URL.
+    if (path === "/googledce1e0dc1be5381e.html")
+      return new Response("google-site-verification: googledce1e0dc1be5381e.html", {
+        status: 200, headers: { "Content-Type": "text/html; charset=utf-8" },
+      });
+
     // ---- Billing routes ----
     if (path === "/checkout") {
       const plan = (url.searchParams.get("plan") || "starter").toLowerCase();

@@ -1,13 +1,12 @@
 {
-  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-07-09/server.schema.json",
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-07-09/server.json",
   "name": "io.github.inity13/precisioncalc-mcp",
-  "description": "Deterministic, high-precision finance & business calculations for AI agents (exact decimals): SaaS metrics, currency conversion, business days, NPV/IRR, loan amortization, depreciation.",
+  "description": "Deterministic, high-precision finance & business calculations for AI agents: SaaS metrics, currency conversion, business days, NPV/IRR, loan amortization, depreciation. Exact decimals, never floats.",
   "version": "2.1.0",
   "repository": {
     "url": "https://github.com/inity13/precisioncalc-mcp",
     "source": "github"
   },
-  "websiteUrl": "https://precisioncalc-mcp.pages.dev",
   "remotes": [
     {
       "type": "streamable-http",
