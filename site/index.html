@@ -57,10 +57,14 @@
       Built on Python's <code>decimal</code> module — <b>never floats</b> — so every answer is exact,
       reproducible, and fully transparent (value + formula + inputs + assumptions).</p>
     <div class="cta">
-      <a class="btn" href="https://github.com/inity13/precisioncalc-mcp">View on GitHub →</a>
-      <a class="btn alt" href="#quickstart">Quickstart</a>
+      <a class="btn" href="#connect">Connect the live server →</a>
+      <a class="btn alt" href="#quickstart">Run locally</a>
       <a class="btn alt" href="#tools">Tools</a>
     </div>
+    <p style="margin-top:18px;font-family:var(--mono);font-size:14px;color:var(--muted)">
+      <span style="color:var(--acc)">● live</span> &nbsp;MCP endpoint:
+      <b style="color:var(--ink)">https://precisioncalc-mcp.pages.dev/mcp</b>
+    </p>
   </div>
 </header>
 
@@ -99,6 +103,42 @@
       <span class="pill">USD</span><span class="pill">EUR</span><span class="pill">GBP</span><span class="pill">JPY</span>
       <span class="pill">CAD</span><span class="pill">AUD</span><span class="pill">CHF</span><span class="pill">CNY</span><span class="pill">INR</span>
     </p>
+  </div>
+</section>
+
+<section id="connect">
+  <div class="wrap">
+    <h2>Connect the live server (free, hosted)</h2>
+    <p class="sub" style="max-width:820px">A public, remote MCP server is running on Cloudflare's edge —
+      no install required. Point any Streamable-HTTP MCP client at the endpoint below. Same exact-Decimal
+      engine as the Python build (verified 17/17 output parity).</p>
+    <div class="two">
+      <div>
+        <p class="kv"><b>Endpoint (Streamable HTTP)</b></p>
+<pre>https://precisioncalc-mcp.pages.dev/mcp</pre>
+        <p class="kv"><b>MCP client config</b></p>
+<pre>{
+  "mcpServers": {
+    "precisioncalc": {
+      "type": "http",
+      "url": "https://precisioncalc-mcp.pages.dev/mcp"
+    }
+  }
+}</pre>
+      </div>
+      <div>
+        <p class="kv"><b>Try it with curl</b></p>
+<pre>curl -sN https://precisioncalc-mcp.pages.dev/mcp \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json, text/event-stream" \
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/call",
+       "params":{"name":"currency_convert",
+         "arguments":{"amount":1000,"from_currency":"USD",
+                      "to_currency":"JPY","live":true}}}'</pre>
+        <p class="note">Open mode is enabled for this public demo. Self-host with API-key auth +
+          rate limiting via the included Python server, Docker image, or your own Cloudflare Pages project.</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -159,7 +199,7 @@ python server.py http       # streamable HTTP on /mcp</pre>
 <footer>
   <div class="wrap">
     <p><b>PrecisionCalc MCP</b> · MIT licensed · Built with the official MCP Python SDK ·
-      <a href="https://github.com/inity13/precisioncalc-mcp">GitHub</a> ·
+      <a href="#connect">Live endpoint</a> ·
       <a href="https://modelcontextprotocol.io">What is MCP?</a></p>
     <p>Indicative FX rates (ECB via frankfurter.app) — not for settlement or trading.</p>
   </div>

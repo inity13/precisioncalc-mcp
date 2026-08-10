@@ -16,6 +16,31 @@ any **assumptions/warnings**.
 > API-key auth + rate limiting + usage metering on the HTTP transport, structured
 > JSON logging, optional OpenTelemetry tracing, and property-based tests.
 
+## 🌐 Live hosted server (free, no install)
+
+A public remote MCP server runs on Cloudflare's edge — point any Streamable-HTTP
+MCP client at it:
+
+```
+https://precisioncalc-mcp.pages.dev/mcp
+```
+
+```json
+{ "mcpServers": { "precisioncalc": {
+    "type": "http", "url": "https://precisioncalc-mcp.pages.dev/mcp" } } }
+```
+
+The edge build (`worker-src/`) is a Cloudflare Pages Function that mirrors the
+Python engine using `decimal.js` — verified **17/17 exact output parity**. It runs
+in **open mode** (no key) for demoing; self-host with auth for production. Landing
+page + docs: <https://precisioncalc-mcp.pages.dev>.
+
+Rebuild/redeploy the edge server:
+```bash
+npm install          # decimal.js + esbuild
+npm run deploy       # bundles worker-src -> site/_worker.js and deploys to Pages
+```
+
 ---
 
 ## What it does

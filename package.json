@@ -1,0 +1,18 @@
+{
+  "name": "precisioncalc-mcp",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Edge (Cloudflare Pages Functions) build of the PrecisionCalc MCP server.",
+  "type": "module",
+  "scripts": {
+    "build": "esbuild worker-src/index.mjs --bundle --format=esm --target=es2022 --platform=neutral --outfile=site/_worker.js --minify",
+    "deploy": "npm run build && wrangler pages deploy site --project-name precisioncalc-mcp --branch main --commit-dirty=true",
+    "dev": "npm run build && wrangler pages dev site"
+  },
+  "dependencies": {
+    "decimal.js": "^10.4.3"
+  },
+  "devDependencies": {
+    "esbuild": "^0.23.0"
+  }
+}
