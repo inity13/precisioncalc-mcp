@@ -38,7 +38,7 @@ page + docs: <https://precisioncalc-mcp.pages.dev>.
 
 | Plan | Price | Daily calls | Live/historical FX | `batch_calculate` |
 |------|-------|-------------|--------------------|-------------------|
-| **Free** (no key) | $0 | 25 / day (per IP) | ❌ static only | ❌ |
+| **Free** (no key) | $0 | 15 / day (per IP) | ❌ static only | ❌ |
 | **Starter** | $12/mo | 5,000 / day | ✅ | ✅ |
 | **Pro** | $39/mo | 50,000 / day | ✅ | ✅ |
 
