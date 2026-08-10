@@ -1,0 +1,21 @@
+# Render.com blueprint for the PrecisionCalc MCP HTTP transport.
+# Deploy: push to GitHub, then "New +" -> "Blueprint" and point at this repo.
+services:
+  - type: web
+    name: precisioncalc-mcp
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    healthCheckPath: /metrics
+    envVars:
+      - key: PRECISIONCALC_HOST
+        value: 0.0.0.0
+      - key: PRECISIONCALC_PORT
+        value: "8000"
+      - key: PRECISIONCALC_FX_PROVIDER
+        value: frankfurter
+      - key: PRECISIONCALC_LOG_JSON
+        value: "1"
+      # Configure your API keys as a secret in the Render dashboard:
+      - key: PRECISIONCALC_API_KEYS
+        sync: false

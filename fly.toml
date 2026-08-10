@@ -1,0 +1,32 @@
+# Fly.io deployment for the PrecisionCalc MCP HTTP transport.
+# Deploy:  fly launch --no-deploy  &&  fly secrets set PRECISIONCALC_API_KEYS=your-key  &&  fly deploy
+app = "precisioncalc-mcp"
+primary_region = "iad"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  PRECISIONCALC_HOST = "0.0.0.0"
+  PRECISIONCALC_PORT = "8000"
+  PRECISIONCALC_FX_PROVIDER = "frankfurter"
+  PRECISIONCALC_LOG_JSON = "1"
+  # Set the secret separately:  fly secrets set PRECISIONCALC_API_KEYS=key1,key2
+
+[http_service]
+  internal_port = 8000
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0
+
+  [[http_service.checks]]
+    interval = "30s"
+    timeout = "5s"
+    grace_period = "10s"
+    method = "GET"
+    path = "/metrics"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "256mb"

@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "precisioncalc-mcp"
+version = "2.0.0"
+description = "Deterministic, high-precision business/finance/ops calculation MCP server."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "PrecisionCalc" }]
+keywords = ["mcp", "model-context-protocol", "finance", "decimal", "calculations", "saas-metrics"]
+classifiers = [
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Office/Business :: Financial",
+]
+dependencies = [
+    "mcp>=1.2.0",
+    "python-dateutil>=2.9.0",
+]
+
+[project.optional-dependencies]
+# Live/historical FX, per-country holidays, HTTP transport, tracing, tests.
+http = ["uvicorn>=0.30", "starlette>=0.37"]
+holidays = ["holidays>=0.50"]
+otel = ["opentelemetry-sdk>=1.20", "opentelemetry-exporter-otlp-proto-http>=1.20"]
+dev = ["pytest>=8.0", "hypothesis>=6.0"]
+all = [
+    "uvicorn>=0.30", "starlette>=0.37", "holidays>=0.50",
+    "opentelemetry-sdk>=1.20", "pytest>=8.0", "hypothesis>=6.0",
+]
+
+[project.urls]
+Homepage = "https://precisioncalc-mcp.pages.dev"
+Repository = "https://github.com/inity13/precisioncalc-mcp"
+
+[project.scripts]
+precisioncalc-mcp = "server:main"
+
+[tool.setuptools]
+py-modules = ["server", "security", "observability"]
+packages = ["calculations", "schemas"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

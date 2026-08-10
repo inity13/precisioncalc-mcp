@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PrecisionCalc MCP — deterministic finance calculations for AI agents</title>
+<meta name="description" content="A deterministic Model Context Protocol (MCP) server giving LLM agents exact, high-precision business, finance, and operational calculations. Decimal precision, never floats." />
+<meta property="og:title" content="PrecisionCalc MCP" />
+<meta property="og:description" content="Exact, high-precision business & finance calculations for AI agents over MCP." />
+<meta property="og:type" content="website" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧮</text></svg>" />
+<style>
+  :root{
+    --bg:#0b0f1a; --panel:#121829; --panel2:#0e1424; --ink:#e7ecf5; --muted:#93a0bd;
+    --acc:#5ce1a6; --acc2:#63a4ff; --line:#20293f; --warn:#ffcf6b;
+    --mono:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:radial-gradient(1200px 600px at 70% -10%,#16203a 0,transparent 60%),var(--bg);
+    color:var(--ink);font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;line-height:1.6}
+  a{color:var(--acc2);text-decoration:none} a:hover{text-decoration:underline}
+  .wrap{max-width:960px;margin:0 auto;padding:0 20px}
+  header{padding:64px 0 28px;border-bottom:1px solid var(--line)}
+  .badge{display:inline-block;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--acc);
+    border:1px solid var(--line);border-radius:999px;padding:5px 12px;background:var(--panel)}
+  h1{font-size:clamp(32px,5vw,52px);margin:18px 0 8px;line-height:1.1}
+  h1 .grad{background:linear-gradient(90deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{color:var(--muted);font-size:19px;max-width:680px}
+  .cta{margin-top:26px;display:flex;gap:12px;flex-wrap:wrap}
+  .btn{background:var(--acc);color:#06231a;font-weight:700;border-radius:10px;padding:11px 18px;border:0;display:inline-block}
+  .btn.alt{background:transparent;color:var(--ink);border:1px solid var(--line)}
+  section{padding:40px 0;border-bottom:1px solid var(--line)}
+  h2{font-size:26px;margin:0 0 18px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px}
+  .card h3{margin:0 0 6px;font-size:16px;font-family:var(--mono);color:var(--acc)}
+  .card p{margin:0;color:var(--muted);font-size:14px}
+  pre{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:16px;overflow:auto;
+    font-family:var(--mono);font-size:13.5px;color:#d7e2ff}
+  code{font-family:var(--mono)}
+  .pill{display:inline-block;background:var(--panel);border:1px solid var(--line);border-radius:8px;
+    padding:3px 9px;margin:3px 4px 0 0;font-family:var(--mono);font-size:12.5px;color:var(--ink)}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:720px){.two{grid-template-columns:1fr}}
+  .note{color:var(--warn);font-size:14px}
+  footer{padding:34px 0 60px;color:var(--muted);font-size:14px}
+  .kv{color:var(--muted);font-size:14px}
+  .kv b{color:var(--ink)}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <span class="badge">MCP · Model Context Protocol</span>
+    <h1>PrecisionCalc <span class="grad">MCP</span></h1>
+    <p class="sub">Deterministic, high-precision business, finance &amp; operational calculations for AI agents.
+      Built on Python's <code>decimal</code> module — <b>never floats</b> — so every answer is exact,
+      reproducible, and fully transparent (value + formula + inputs + assumptions).</p>
+    <div class="cta">
+      <a class="btn" href="https://github.com/inity13/precisioncalc-mcp">View on GitHub →</a>
+      <a class="btn alt" href="#quickstart">Quickstart</a>
+      <a class="btn alt" href="#tools">Tools</a>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h2>Why it exists</h2>
+    <p class="sub" style="max-width:820px">LLMs lose precision and hallucinate on multi-step financial
+      formulas, currency conversions, business-day logic, and growth math. PrecisionCalc gives agents a
+      trustworthy calculator with a <b>consistent, parseable JSON envelope</b> on every call.</p>
+    <div class="grid" style="margin-top:18px">
+      <div class="card"><h3>exact</h3><p>50-digit Decimal precision. Money &amp; rates serialized as strings — zero float drift.</p></div>
+      <div class="card"><h3>transparent</h3><p>Every result includes the formula used, the inputs, the unit, and edge-case notes.</p></div>
+      <div class="card"><h3>agent-friendly</h3><p>Uniform <code>status/value/formula/inputs_used</code> shape. Errors return actionable hints, never exceptions.</p></div>
+      <div class="card"><h3>production-ready</h3><p>stdio + HTTP transports, API-key auth, rate limiting, usage metering, structured logs, OTel.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="tools">
+  <div class="wrap">
+    <h2>11 tools</h2>
+    <div class="grid">
+      <div class="card"><h3>calculate_metric</h3><p>14 SaaS/biz metrics: LTV, CAC, LTV:CAC, payback, churn, MRR growth, ARR, break-even, NRR, GRR, Rule of 40, magic number…</p></div>
+      <div class="card"><h3>currency_convert</h3><p>9 currencies; static offline table or live/historical ECB rates with graceful fallback.</p></div>
+      <div class="card"><h3>business_days</h3><p>Add/count/next/prev; US/UK/EU + any ISO country + custom holidays.</p></div>
+      <div class="card"><h3>compound_growth</h3><p>Future value, present value, CAGR; 7 compounding frequencies incl. continuous.</p></div>
+      <div class="card"><h3>net_present_value</h3><p>Discounted cash flow (NPV) of a cashflow series.</p></div>
+      <div class="card"><h3>internal_rate_of_return</h3><p>IRR via Newton + bisection fallback.</p></div>
+      <div class="card"><h3>loan_amortization</h3><p>Payment, totals, full schedule, extra-payment payoff.</p></div>
+      <div class="card"><h3>depreciation</h3><p>Straight-line, declining-balance, sum-of-years-digits.</p></div>
+      <div class="card"><h3>batch_calculate</h3><p>Many calculations in one request.</p></div>
+      <div class="card"><h3>list_metrics</h3><p>Discovery: every metric + required params.</p></div>
+      <div class="card"><h3>health_check</h3><p>Version, capabilities, status.</p></div>
+    </div>
+    <p style="margin-top:16px">
+      <span class="pill">USD</span><span class="pill">EUR</span><span class="pill">GBP</span><span class="pill">JPY</span>
+      <span class="pill">CAD</span><span class="pill">AUD</span><span class="pill">CHF</span><span class="pill">CNY</span><span class="pill">INR</span>
+    </p>
+  </div>
+</section>
+
+<section id="quickstart">
+  <div class="wrap">
+    <h2>Quickstart</h2>
+    <div class="two">
+      <div>
+        <p class="kv"><b>Run locally</b> (stdio, the default MCP transport)</p>
+<pre>git clone https://github.com/inity13/precisioncalc-mcp
+cd precisioncalc-mcp
+pip install -r requirements.txt
+
+python server.py            # stdio
+python server.py http       # streamable HTTP on /mcp</pre>
+        <p class="kv"><b>Register with an MCP client</b></p>
+<pre>{
+  "mcpServers": {
+    "precisioncalc": {
+      "command": "python",
+      "args": ["/path/to/precisioncalc-mcp/server.py"]
+    }
+  }
+}</pre>
+      </div>
+      <div>
+        <p class="kv"><b>Example tool call</b> → structured result</p>
+<pre>// call: net_present_value
+{ "rate": 0.10,
+  "cashflows": [-10000, 3000, 4200, 6800] }
+
+// result
+{
+  "status": "success",
+  "value": "1307.287...",
+  "formatted_value": "$1,307.29",
+  "formula": "NPV = sum(CF_t / (1 + rate)^t)",
+  "inputs_used": { "rate": "0.10", "cashflows": [...] },
+  "unit": "USD",
+  "notes": ["Period 0 cashflow is not discounted.", ...]
+}</pre>
+        <p class="note">⛭ Deploy: Docker image + Fly.io &amp; Render blueprints included. HTTP transport
+          supports API keys, rate limiting, and a <code>/metrics</code> usage endpoint.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Built for correctness</h2>
+    <p class="sub" style="max-width:820px">49 unit tests plus Hypothesis property tests assert rounding
+      invariants and inverse operations (PV↔FV round-trips, currency round-trips, loan total consistency,
+      NPV(IRR)≈0). The calculation engines are pure and deterministic.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b>PrecisionCalc MCP</b> · MIT licensed · Built with the official MCP Python SDK ·
+      <a href="https://github.com/inity13/precisioncalc-mcp">GitHub</a> ·
+      <a href="https://modelcontextprotocol.io">What is MCP?</a></p>
+    <p>Indicative FX rates (ECB via frankfurter.app) — not for settlement or trading.</p>
+  </div>
+</footer>
+</body>
+</html>
