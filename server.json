@@ -1,5 +1,5 @@
 {
-  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-07-09/server.json",
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-07-09/server.schema.json",
   "name": "io.github.inity13/precisioncalc-mcp",
   "description": "High-precision finance & business calculations for AI agents — exact decimals, never floats.",
   "version": "2.1.0",
