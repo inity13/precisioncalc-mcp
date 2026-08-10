@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "esbuild worker-src/index.mjs --bundle --format=esm --target=es2022 --platform=neutral --outfile=site/_worker.js --minify",
-    "deploy": "npm run build && wrangler pages deploy site --project-name precisioncalc-mcp --branch main --commit-dirty=true",
+    "deploy": "npm run build && wrangler pages deploy --commit-dirty=true",
     "dev": "npm run build && wrangler pages dev site"
   },
   "dependencies": {

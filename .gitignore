@@ -33,3 +33,6 @@ htmlcov/
 node_modules/
 package-lock.json
 site/_worker.js
+
+# wrangler local cache
+.wrangler/

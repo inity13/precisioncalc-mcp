@@ -531,7 +531,7 @@ function depRow(year, dep, book) { return { year: String(year), depreciation: de
 
 export function health_check() {
   return {
-    status: "ok", server: "PrecisionCalc", version: "2.0.0-edge",
+    status: "ok", server: "PrecisionCalc", version: "2.1.0-edge",
     precision: "decimal.js (50 significant digits)",
     tools: ["business_days", "batch_calculate", "calculate_metric", "compound_growth", "currency_convert", "depreciation", "health_check", "internal_rate_of_return", "list_metrics", "loan_amortization", "net_present_value"],
     supported_metrics: Object.keys(METRIC_CATALOG).sort(),

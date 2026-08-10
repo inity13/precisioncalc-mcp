@@ -31,9 +31,27 @@ https://precisioncalc-mcp.pages.dev/mcp
 ```
 
 The edge build (`worker-src/`) is a Cloudflare Pages Function that mirrors the
-Python engine using `decimal.js` — verified **17/17 exact output parity**. It runs
-in **open mode** (no key) for demoing; self-host with auth for production. Landing
+Python engine using `decimal.js` — verified **17/17 exact output parity**. Landing
 page + docs: <https://precisioncalc-mcp.pages.dev>.
+
+### Plans (hosted endpoint)
+
+| Plan | Price | Daily calls | Live/historical FX | `batch_calculate` |
+|------|-------|-------------|--------------------|-------------------|
+| **Free** (no key) | $0 | 25 / day (per IP) | ❌ static only | ❌ |
+| **Starter** | $12/mo | 5,000 / day | ✅ | ✅ |
+| **Pro** | $39/mo | 50,000 / day | ✅ | ✅ |
+
+Checkout is Stripe (subscription). On success you get an API key instantly; send it as
+`X-API-Key: <key>` (or `Authorization: Bearer <key>`). Manage/cancel at `/portal`.
+When a limit is hit, tools return a structured `status:"error"` envelope with `type`,
+`usage`, and an `upgrade` block containing checkout URLs — so an **agent can surface the
+paywall to the user and act on it**. Self-host (below) for unlimited calls with your own keys.
+
+Billing internals live in `worker-src/billing.mjs` (Stripe REST + Cloudflare KV for keys
+and daily counters). Server env: `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`,
+`PRICE_STARTER`, `PRICE_PRO`, `FREE_DAILY`, `STARTER_DAILY`, `PRO_DAILY`, and a
+`PRECISIONCALC_KV` namespace binding (see `wrangler.toml`).
 
 Rebuild/redeploy the edge server:
 ```bash

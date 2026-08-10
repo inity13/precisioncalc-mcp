@@ -1,0 +1,20 @@
+name = "precisioncalc-mcp"
+pages_build_output_dir = "site"
+compatibility_date = "2024-09-01"
+
+# Persistent store for API keys + daily usage counters (quota enforcement).
+[[kv_namespaces]]
+binding = "PRECISIONCALC_KV"
+id = "73ecdeb30d944f18bb6e906752de3b71"
+
+[vars]
+PRECISIONCALC_BASE_URL = "https://precisioncalc-mcp.pages.dev"
+PRICE_STARTER = "price_1U2qEXI051HaG0hDG5NfLpSt"
+PRICE_PRO = "price_1U2qEZI051HaG0hDM8SZu8O5"
+FREE_DAILY = "25"
+STARTER_DAILY = "5000"
+PRO_DAILY = "50000"
+
+# Secrets set out-of-band (never in this file):
+#   wrangler pages secret put STRIPE_SECRET_KEY
+#   wrangler pages secret put STRIPE_WEBHOOK_SECRET
