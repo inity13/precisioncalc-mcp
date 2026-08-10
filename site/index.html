@@ -46,6 +46,39 @@
   footer{padding:34px 0 60px;color:var(--muted);font-size:14px}
   .kv{color:var(--muted);font-size:14px}
   .kv b{color:var(--ink)}
+
+  /* code block with header + copy button */
+  .codeblock{position:relative;background:var(--panel2);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:8px 0 14px}
+  .codeblock .cbhead{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-bottom:1px solid var(--line);
+    font-family:var(--mono);font-size:12px;color:var(--muted);background:#0b1120}
+  .codeblock pre{margin:0;border:0;border-radius:0;background:transparent}
+  .copy{cursor:pointer;background:var(--panel);border:1px solid var(--line);color:var(--ink);border-radius:7px;
+    padding:4px 10px;font-size:12px;font-family:var(--mono)}
+  .copy:hover{border-color:var(--acc);color:var(--acc)}
+  .copy.copied{color:var(--acc);border-color:var(--acc)}
+
+  /* tabs */
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 14px}
+  .tab{cursor:pointer;background:var(--panel);border:1px solid var(--line);color:var(--muted);
+    border-radius:999px;padding:7px 14px;font-size:14px;font-weight:600}
+  .tab:hover{color:var(--ink)}
+  .tab.active{background:linear-gradient(90deg,rgba(92,225,166,.16),rgba(99,164,255,.16));border-color:var(--acc);color:var(--ink)}
+  .panel-config{display:none}
+  .panel-config.active{display:block}
+  .cfgpath{font-family:var(--mono);font-size:12.5px;color:var(--muted);margin:0 0 2px}
+
+  /* pricing table */
+  .ptable{width:100%;border-collapse:collapse;margin-top:8px;font-size:14.5px}
+  .ptable th,.ptable td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+  .ptable th{color:var(--muted);font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.05em}
+  .ptable td b{color:var(--ink)}
+  .ptable .col-free{color:var(--ink)}
+  .price{font-size:34px;font-weight:800;color:var(--acc)}
+  .price small{font-size:14px;color:var(--muted);font-weight:600}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+  .chip{display:inline-flex;align-items:center;gap:6px;background:var(--panel);border:1px solid var(--line);
+    border-radius:999px;padding:6px 12px;font-size:13.5px;color:var(--ink)}
+  .chip .dot{width:7px;height:7px;border-radius:50%;background:var(--acc)}
 </style>
 </head>
 <body>
@@ -57,13 +90,14 @@
       Built on Python's <code>decimal</code> module — <b>never floats</b> — so every answer is exact,
       reproducible, and fully transparent (value + formula + inputs + assumptions).</p>
     <div class="cta">
-      <a class="btn" href="#connect">Connect the live server →</a>
+      <a class="btn" href="#install">+ Add to Claude, Cursor, VS Code…</a>
+      <a class="btn alt" href="#tools">Explore tools</a>
       <a class="btn alt" href="#quickstart">Run locally</a>
-      <a class="btn alt" href="#tools">Tools</a>
     </div>
     <p style="margin-top:18px;font-family:var(--mono);font-size:14px;color:var(--muted)">
       <span style="color:var(--acc)">● live</span> &nbsp;MCP endpoint:
       <b style="color:var(--ink)">https://precisioncalc-mcp.pages.dev/mcp</b>
+      &nbsp;·&nbsp; <span style="color:var(--acc)">free</span>, no key required
     </p>
   </div>
 </header>
@@ -106,17 +140,109 @@
   </div>
 </section>
 
-<section id="connect">
+<section id="install">
   <div class="wrap">
-    <h2>Connect the live server (free, hosted)</h2>
-    <p class="sub" style="max-width:820px">A public, remote MCP server is running on Cloudflare's edge —
-      no install required. Point any Streamable-HTTP MCP client at the endpoint below. Same exact-Decimal
-      engine as the Python build (verified 17/17 output parity).</p>
-    <div class="two">
-      <div>
-        <p class="kv"><b>Endpoint (Streamable HTTP)</b></p>
-<pre>https://precisioncalc-mcp.pages.dev/mcp</pre>
-        <p class="kv"><b>MCP client config</b></p>
+    <h2>Add PrecisionCalc to your agent</h2>
+    <p class="sub" style="max-width:820px">One remote endpoint, no install, no API key. Pick your client,
+      copy the config, restart. Same exact-Decimal engine as the Python build (verified 17/17 output parity).</p>
+
+    <div class="codeblock" style="max-width:640px">
+      <div class="cbhead"><span>Streamable-HTTP endpoint</span>
+        <button class="copy" data-copy="https://precisioncalc-mcp.pages.dev/mcp">Copy</button></div>
+      <pre>https://precisioncalc-mcp.pages.dev/mcp</pre>
+    </div>
+
+    <div class="tabs" id="clientTabs">
+      <button class="tab active" data-tab="cursor">Cursor</button>
+      <button class="tab" data-tab="claude">Claude Desktop</button>
+      <button class="tab" data-tab="vscode">VS Code</button>
+      <button class="tab" data-tab="windsurf">Windsurf</button>
+      <button class="tab" data-tab="cline">Cline</button>
+      <button class="tab" data-tab="zed">Zed</button>
+      <button class="tab" data-tab="generic">Generic</button>
+    </div>
+
+    <div class="panel-config active" data-panel="cursor">
+      <p class="cfgpath">~/.cursor/mcp.json &nbsp;(or a project&#39;s <code>.cursor/mcp.json</code>)</p>
+      <div class="codeblock"><div class="cbhead"><span>mcp.json</span><button class="copy">Copy</button></div>
+<pre>{
+  "mcpServers": {
+    "precisioncalc": {
+      "url": "https://precisioncalc-mcp.pages.dev/mcp"
+    }
+  }
+}</pre></div>
+    </div>
+
+    <div class="panel-config" data-panel="claude">
+      <p class="cfgpath">claude_desktop_config.json &nbsp;(Settings → Developer → Edit Config). Uses the
+        <code>mcp-remote</code> bridge for remote HTTP.</p>
+      <div class="codeblock"><div class="cbhead"><span>claude_desktop_config.json</span><button class="copy">Copy</button></div>
+<pre>{
+  "mcpServers": {
+    "precisioncalc": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://precisioncalc-mcp.pages.dev/mcp"]
+    }
+  }
+}</pre></div>
+    </div>
+
+    <div class="panel-config" data-panel="vscode">
+      <p class="cfgpath">.vscode/mcp.json &nbsp;(or run “MCP: Add Server” in the Command Palette)</p>
+      <div class="codeblock"><div class="cbhead"><span>.vscode/mcp.json</span><button class="copy">Copy</button></div>
+<pre>{
+  "servers": {
+    "precisioncalc": {
+      "type": "http",
+      "url": "https://precisioncalc-mcp.pages.dev/mcp"
+    }
+  }
+}</pre></div>
+    </div>
+
+    <div class="panel-config" data-panel="windsurf">
+      <p class="cfgpath">~/.codeium/windsurf/mcp_config.json</p>
+      <div class="codeblock"><div class="cbhead"><span>mcp_config.json</span><button class="copy">Copy</button></div>
+<pre>{
+  "mcpServers": {
+    "precisioncalc": {
+      "serverUrl": "https://precisioncalc-mcp.pages.dev/mcp"
+    }
+  }
+}</pre></div>
+    </div>
+
+    <div class="panel-config" data-panel="cline">
+      <p class="cfgpath">Cline → MCP Servers → Configure (cline_mcp_settings.json)</p>
+      <div class="codeblock"><div class="cbhead"><span>cline_mcp_settings.json</span><button class="copy">Copy</button></div>
+<pre>{
+  "mcpServers": {
+    "precisioncalc": {
+      "type": "streamableHttp",
+      "url": "https://precisioncalc-mcp.pages.dev/mcp"
+    }
+  }
+}</pre></div>
+    </div>
+
+    <div class="panel-config" data-panel="zed">
+      <p class="cfgpath">Zed settings.json → context_servers</p>
+      <div class="codeblock"><div class="cbhead"><span>settings.json</span><button class="copy">Copy</button></div>
+<pre>{
+  "context_servers": {
+    "precisioncalc": {
+      "source": "custom",
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://precisioncalc-mcp.pages.dev/mcp"]
+    }
+  }
+}</pre></div>
+    </div>
+
+    <div class="panel-config" data-panel="generic">
+      <p class="cfgpath">Any Streamable-HTTP MCP client</p>
+      <div class="codeblock"><div class="cbhead"><span>config</span><button class="copy">Copy</button></div>
 <pre>{
   "mcpServers": {
     "precisioncalc": {
@@ -124,21 +250,47 @@
       "url": "https://precisioncalc-mcp.pages.dev/mcp"
     }
   }
-}</pre>
-      </div>
-      <div>
-        <p class="kv"><b>Try it with curl</b></p>
+}</pre></div>
+    </div>
+
+    <p class="kv" style="margin-top:10px"><b>Verify from a terminal</b></p>
+    <div class="codeblock"><div class="cbhead"><span>curl — live USD→JPY conversion</span><button class="copy">Copy</button></div>
 <pre>curl -sN https://precisioncalc-mcp.pages.dev/mcp \
   -H "Content-Type: application/json" \
   -H "Accept: application/json, text/event-stream" \
-  -d '{"jsonrpc":"2.0","id":1,"method":"tools/call",
-       "params":{"name":"currency_convert",
-         "arguments":{"amount":1000,"from_currency":"USD",
-                      "to_currency":"JPY","live":true}}}'</pre>
-        <p class="note">Open mode is enabled for this public demo. Self-host with API-key auth +
-          rate limiting via the included Python server, Docker image, or your own Cloudflare Pages project.</p>
-      </div>
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"currency_convert","arguments":{"amount":1000,"from_currency":"USD","to_currency":"JPY","live":true}}}'</pre></div>
+
+    <p class="kv" style="margin-top:6px"><b>Works with</b></p>
+    <div class="chips">
+      <span class="chip"><span class="dot"></span>Cursor</span>
+      <span class="chip"><span class="dot"></span>Claude Desktop</span>
+      <span class="chip"><span class="dot"></span>VS Code (Copilot Agent)</span>
+      <span class="chip"><span class="dot"></span>Windsurf</span>
+      <span class="chip"><span class="dot"></span>Cline</span>
+      <span class="chip"><span class="dot"></span>Zed</span>
+      <span class="chip"><span class="dot"></span>Continue</span>
+      <span class="chip"><span class="dot"></span>LibreChat</span>
+      <span class="chip"><span class="dot"></span>any MCP SDK</span>
     </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <h2>Pricing &amp; limits</h2>
+    <p class="price">$0 <small>/ forever · open beta · MIT licensed</small></p>
+    <table class="ptable">
+      <thead><tr><th style="width:24%"></th><th>Public endpoint (this demo)</th><th>Self-host (your infra)</th></tr></thead>
+      <tbody>
+        <tr><td><b>Price</b></td><td class="col-free">Free, no account, no card</td><td>Free &amp; open-source (MIT)</td></tr>
+        <tr><td><b>Auth</b></td><td>None — open mode, no API key</td><td>API keys via <code>PRECISIONCALC_API_KEYS</code></td></tr>
+        <tr><td><b>Rate limits</b></td><td>Fair use — shared Cloudflare Free tier (~100k requests/day, per-IP throttling). No SLA.</td><td>Per-key token bucket you control (<code>_RATE_LIMIT_PER_MIN</code>, burst) + <code>/metrics</code> usage.</td></tr>
+        <tr><td><b>Data</b></td><td>Stateless. No inputs stored. FX rates are indicative (ECB via frankfurter.app) — not for settlement/trading.</td><td>Same engine; plug in your own licensed FX feed.</td></tr>
+        <tr><td><b>Best for</b></td><td>Trying it out, side projects, low-volume agents.</td><td>Production, private data, guaranteed limits, custom domains.</td></tr>
+      </tbody>
+    </table>
+    <p class="note" style="margin-top:12px">Need higher limits, an SLA, or private hosting? The full Python
+      server (stdio + HTTP), Docker image, and Fly.io / Render blueprints are included — deploy your own in minutes.</p>
   </div>
 </section>
 
@@ -154,7 +306,8 @@ pip install -r requirements.txt
 
 python server.py            # stdio
 python server.py http       # streamable HTTP on /mcp</pre>
-        <p class="kv"><b>Register with an MCP client</b></p>
+        <p class="kv"><b>Register locally (stdio)</b></p>
+        <div class="codeblock"><div class="cbhead"><span>MCP client config</span><button class="copy">Copy</button></div>
 <pre>{
   "mcpServers": {
     "precisioncalc": {
@@ -162,7 +315,7 @@ python server.py http       # streamable HTTP on /mcp</pre>
       "args": ["/path/to/precisioncalc-mcp/server.py"]
     }
   }
-}</pre>
+}</pre></div>
       </div>
       <div>
         <p class="kv"><b>Example tool call</b> → structured result</p>
@@ -199,10 +352,40 @@ python server.py http       # streamable HTTP on /mcp</pre>
 <footer>
   <div class="wrap">
     <p><b>PrecisionCalc MCP</b> · MIT licensed · Built with the official MCP Python SDK ·
-      <a href="#connect">Live endpoint</a> ·
+      <a href="#install">Add to your agent</a> ·
+      <a href="#pricing">Pricing</a> ·
+      <a href="#tools">Tools</a> ·
       <a href="https://modelcontextprotocol.io">What is MCP?</a></p>
     <p>Indicative FX rates (ECB via frankfurter.app) — not for settlement or trading.</p>
   </div>
 </footer>
+<script>
+  // Tab switching for the installer
+  const tabs = document.querySelectorAll('#clientTabs .tab');
+  const panels = document.querySelectorAll('.panel-config');
+  tabs.forEach(t => t.addEventListener('click', () => {
+    tabs.forEach(x => x.classList.remove('active'));
+    panels.forEach(p => p.classList.remove('active'));
+    t.classList.add('active');
+    document.querySelector('.panel-config[data-panel="' + t.dataset.tab + '"]').classList.add('active');
+  }));
+
+  // Copy buttons: copy explicit data-copy value, else the sibling <pre> text
+  document.querySelectorAll('.copy').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const text = btn.dataset.copy || btn.closest('.codeblock').querySelector('pre').innerText;
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch (e) {
+        const ta = document.createElement('textarea');
+        ta.value = text; document.body.appendChild(ta); ta.select();
+        document.execCommand('copy'); ta.remove();
+      }
+      const old = btn.textContent;
+      btn.textContent = 'Copied ✓'; btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = old; btn.classList.remove('copied'); }, 1500);
+    });
+  });
+</script>
 </body>
 </html>
