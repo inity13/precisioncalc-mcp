@@ -1,0 +1,17 @@
+# Smithery listing for the hosted PrecisionCalc MCP server (remote, Streamable HTTP).
+# Docs: https://smithery.ai/docs
+startCommand:
+  type: http
+  url: "https://precisioncalc-mcp.pages.dev/mcp"
+  # Optional API key for paid tiers, sent as the X-API-Key header.
+  configSchema:
+    type: object
+    properties:
+      apiKey:
+        type: string
+        title: "API key (optional)"
+        description: "Paid-plan key (pck_live_...). Leave blank for the free tier."
+    required: []
+  # Map the configured apiKey into the request header.
+  exampleConfig:
+    apiKey: ""
