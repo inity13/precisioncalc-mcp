@@ -1,6 +1,6 @@
 {
   "name": "precisioncalc-mcp",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "private": false,
   "description": "PrecisionCalc MCP \u2014 high-precision finance & business calculations for AI agents (exact decimals): SaaS metrics, currency, business days, NPV/IRR, loan amortization, depreciation. Runs over stdio (npx) or as a remote server.",
   "type": "module",
@@ -56,5 +56,6 @@
   },
   "engines": {
     "node": ">=18"
-  }
+  },
+  "mcpName": "io.github.inity13/precisioncalc-mcp"
 }
