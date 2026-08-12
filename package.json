@@ -1,18 +1,60 @@
 {
   "name": "precisioncalc-mcp",
-  "version": "2.0.0",
-  "private": true,
-  "description": "Edge (Cloudflare Pages Functions) build of the PrecisionCalc MCP server.",
+  "version": "2.1.0",
+  "private": false,
+  "description": "PrecisionCalc MCP \u2014 high-precision finance & business calculations for AI agents (exact decimals): SaaS metrics, currency, business days, NPV/IRR, loan amortization, depreciation. Runs over stdio (npx) or as a remote server.",
   "type": "module",
   "scripts": {
     "build": "esbuild worker-src/index.mjs --bundle --format=esm --target=es2022 --platform=neutral --outfile=site/_worker.js --minify",
     "deploy": "npm run build && wrangler pages deploy --commit-dirty=true",
-    "dev": "npm run build && wrangler pages dev site"
+    "dev": "npm run build && wrangler pages dev site",
+    "start": "node server.mjs"
   },
   "dependencies": {
     "decimal.js": "^10.4.3"
   },
   "devDependencies": {
     "esbuild": "^0.23.0"
+  },
+  "bin": {
+    "precisioncalc-mcp": "server.mjs"
+  },
+  "files": [
+    "server.mjs",
+    "worker-src/tools.mjs",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "mcp-server",
+    "ai",
+    "ai-agents",
+    "llm",
+    "deterministic",
+    "claude",
+    "cursor",
+    "finance",
+    "fintech",
+    "npv",
+    "irr",
+    "saas-metrics",
+    "ltv",
+    "cac",
+    "currency"
+  ],
+  "license": "MIT",
+  "author": "DataNest",
+  "homepage": "https://precisioncalc-mcp.pages.dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inity13/precisioncalc-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/inity13/precisioncalc-mcp/issues"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }

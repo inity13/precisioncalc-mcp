@@ -18,27 +18,65 @@
   "client_config_examples": {
     "generic": {
       "mcpServers": {
-        "precisioncalc": { "url": "https://precisioncalc-mcp.pages.dev/mcp" }
+        "precisioncalc": {
+          "url": "https://precisioncalc-mcp.pages.dev/mcp"
+        }
       }
     },
     "with_api_key": {
       "mcpServers": {
         "precisioncalc": {
           "url": "https://precisioncalc-mcp.pages.dev/mcp",
-          "headers": { "X-API-Key": "pck_live_your_key" }
+          "headers": {
+            "X-API-Key": "pck_live_your_key"
+          }
+        }
+      }
+    },
+    "stdio_npx": {
+      "mcpServers": {
+        "precisioncalc": {
+          "command": "npx",
+          "args": [
+            "-y",
+            "precisioncalc-mcp"
+          ]
         }
       }
     }
   },
   "tools": [
-    "calculate_metric", "list_metrics", "currency_convert", "business_days",
-    "compound_growth", "net_present_value", "internal_rate_of_return",
-    "loan_amortization", "depreciation", "batch_calculate", "health_check"
+    "calculate_metric",
+    "list_metrics",
+    "currency_convert",
+    "business_days",
+    "compound_growth",
+    "net_present_value",
+    "internal_rate_of_return",
+    "loan_amortization",
+    "depreciation",
+    "batch_calculate",
+    "health_check"
   ],
   "pricing": [
-    { "plan": "free", "price_usd_month": 0, "daily_calls": 15 },
-    { "plan": "starter", "price_usd_month": 12, "daily_calls": 5000 },
-    { "plan": "pro", "price_usd_month": 39, "daily_calls": 50000 }
+    {
+      "plan": "free",
+      "price_usd_month": 0,
+      "daily_calls": 15
+    },
+    {
+      "plan": "starter",
+      "price_usd_month": 12,
+      "daily_calls": 5000
+    },
+    {
+      "plan": "pro",
+      "price_usd_month": 39,
+      "daily_calls": 50000
+    }
   ],
-  "docs": "https://precisioncalc-mcp.pages.dev/llms.txt"
+  "docs": "https://precisioncalc-mcp.pages.dev/llms.txt",
+  "install": {
+    "npm": "npx -y precisioncalc-mcp"
+  }
 }

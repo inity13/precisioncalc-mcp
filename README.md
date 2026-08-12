@@ -25,6 +25,23 @@ MCP client at it:
 https://precisioncalc-mcp.pages.dev/mcp
 ```
 
+## Install via npm (stdio, no hosting)
+
+Run the server locally over stdio with a single command — nothing to deploy:
+
+```bash
+npx -y precisioncalc-mcp
+```
+
+Claude Desktop / any stdio MCP client (`claude_desktop_config.json`):
+
+```json
+{ "mcpServers": { "precisioncalc": { "command": "npx", "args": ["-y", "precisioncalc-mcp"] } } }
+```
+
+This is the same deterministic engine as the hosted server, running on your machine.
+
+
 ```json
 { "mcpServers": { "precisioncalc": {
     "type": "http", "url": "https://precisioncalc-mcp.pages.dev/mcp" } } }
