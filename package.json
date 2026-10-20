@@ -5,6 +5,7 @@
   "description": "PrecisionCalc MCP \u2014 high-precision finance & business calculations for AI agents (exact decimals): SaaS metrics, currency, business days, NPV/IRR, loan amortization, depreciation. Runs over stdio (npx) or as a remote server.",
   "type": "module",
   "scripts": {
+    "test": "node --test tests/*.test.mjs",
     "build": "esbuild worker-src/index.mjs --bundle --format=esm --target=es2022 --platform=neutral --outfile=site/_worker.js --minify",
     "deploy": "npm run build && wrangler pages deploy --commit-dirty=true",
     "dev": "npm run build && wrangler pages dev site",
